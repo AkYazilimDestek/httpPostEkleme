@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card">
+    <div class="card-body">
+    
+            <form method="post" action="/">
+                <div class="form-group">
+
+    <label for="exampleInputEmail1">KİŞİ EKLE</label>
+    <input type="text" id="kisiname" required class="form-control my-3" aria-describedby="emailHelp">
+
+            </div>
+
+            <div class="form-uyari">
+            </div>
+
+            <button type="button" id="kisiekle_button" class="btn btn-primary">EKLE</button>
+
+            </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        var kisiekle_button = document.getElementById("kisiekle_button");
+        var formuyari = document.querySelector(".form-uyari");
+        kisiekle_button.onclick = () => {
+            var kisiname = document.querySelector("#kisiname");
+            if (kisiname.value != null && kisiname.value != "") {
+                fetch("ajaks/kisi/ekleme?kisiname=" + kisiname.value, { method: "POST" }).then(x => x.text()).then((y) => {
+                    if (y == "true") {
+                        formuyari.innerHTML = `
+                                        <div class="alert alert-success">
+                                            FORM BAŞARILI BİR ŞEKİLDE GÖNDERİLDİ.
+                                        </div>
+                                `;
+                    }
+                });
+            }
+        }
+    </script>
+}
